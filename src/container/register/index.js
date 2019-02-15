@@ -6,8 +6,8 @@ import Logo from '../../component/logo';
 import { InputItem ,List,Radio,WingBlank,WhiteSpace,Button} from 'antd-mobile';
 import { connect } from 'react-redux';
 import { register } from '../../redux/user.redux';
+import { Redirect } from 'react-router-dom';
 class Register extends React.Component{
-
     state={
         user:'',
         pwd:'',
@@ -20,22 +20,24 @@ class Register extends React.Component{
         })
     }
     handleRegister = () =>{
+        console.log(this.state);
         this.props.register(this.state);
-        // console.log(this.state);
     }
     render(){
         // console.log(this.props.register);
         const RadioItem = Radio.RadioItem;
         return(
         <div>
+            {this.props.state.redirectTo?<Redirect to={this.props.state.redirectTo} />:null}
             <Logo />
             <List>
-                {this.props.state.msg?<p className="error-msg">用户名密码必须输入</p>:null}
+                {this.props.state.msg?<p className="error-msg">{this.props.state.msg}</p>:null}
               <InputItem
                 onChange={v=>{this.handleChange('user',v)}}
               >用户名</InputItem>
                 <WhiteSpace />
               <InputItem
+              type='password'
                  onChange={v=>{this.handleChange('pwd',v)}}
               >密码</InputItem>
                 <WhiteSpace />
@@ -59,6 +61,9 @@ class Register extends React.Component{
 function mapStateToProps(state){
     return {state:state.user}
 }
+
 const actionCreators = { register }
+
 Register = connect(mapStateToProps,actionCreators)(Register);
+
 export default Register; 

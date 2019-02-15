@@ -1,8 +1,6 @@
 /**
  * 在 express 里面只要和 mongoDB 有关的就直接拆分到 model 里面去
  */
-
-
 const mongoose = require('mongoose');
 // 链接mongo,并且使用imooc这个集合
 const DB_URL  =  'mongodb://127.0.0.1:27017'
@@ -10,8 +8,8 @@ mongoose.connect(DB_URL);
 
 const models = {  //生成一个用户的模型
     user:{
-       'user':{'type':String,'require':true},
-       'pwd':{'type':String,'require':true},
+       'user':{type:String,'require':true},
+       'pwd':{type:String,'require':true},
        'type':{'type':String,'require':true},
         // 头像
        'avatar':{'type':String},
@@ -24,7 +22,6 @@ const models = {  //生成一个用户的模型
         'money':{'type':String}
     },
     chat:{
-
     }
 }
 
