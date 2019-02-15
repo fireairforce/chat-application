@@ -1,6 +1,7 @@
 import React from 'react';
 import Logo from '../../component/logo';
 import {List,InputItem,WingBlank,WhiteSpace,Button} from 'antd-mobile';
+import {Redirect} from 'react-router-dom';
 // 从redux里面引入login
 import {connect} from 'react-redux';
 import {login } from './../../redux/user.redux';
@@ -31,6 +32,7 @@ class Login extends React.Component{
         // console.log(this.props.state);
         return(
           <div>
+               {this.props.state.redirectTo?<Redirect to={this.props.state.redirectTo} />:null}
               <Logo />
               {this.props.state.msg?<p className="error-msg">{this.props.state.msg}</p>:null}
               <WingBlank>

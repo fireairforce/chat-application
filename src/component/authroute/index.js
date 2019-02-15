@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
+import {loadData} from '../../redux/user.redux';
+import {connect} from 'react-redux';
 class AuthRoute extends React.Component{
     componentDidMount(){
         const publicList = ['/login','register']
@@ -14,7 +16,9 @@ class AuthRoute extends React.Component{
                 console.log(res.data);
                 if(res.data.code==0){
                     // 有登录信息的
+                    this.props.loadData(res.data.data)
                 }else{
+                
                     // console.log(this.props.history);
                     this.props.history.push('/login');
                 }
@@ -32,4 +36,10 @@ class AuthRoute extends React.Component{
         )
     }
 }
+const actionCreators = {loadData}
+// 这里不需要使用这些数据,前面那个参数用null代替就可以了
+// function mapStateToProps(state){
+//     return {state:state.user}
+// }
+AuthRoute = connect(null,actionCreators)(AuthRoute)
 export default withRouter(AuthRoute);
