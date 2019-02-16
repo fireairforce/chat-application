@@ -5,7 +5,7 @@ export function getRedirectPath({type,avatar}){
     // user.type  /boss  /genius
     // user.avatar  /bossinfo /geniusinfo
     let url = (type==='boss')?'/boss':'/genius' 
-    if(!avatar){
+    if(!avatar){ // 如果用户没有头像就去info里面完善信息，如果有头像就直接跳genius 
         url += 'info'
     }
     return url

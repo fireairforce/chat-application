@@ -66,8 +66,10 @@ Router.post('/update',function(req,res){
     if(!userid){
       return json.dumps({code:1})
     }
-    const body = res.body;
+    const body = req.body.data;
     User.findByIdAndUpdate(userid,body,function(err,doc){
+        // console.log(doc);
+        // console.log(body);
         const data = Object.assign({},{ //因为noodejs里面不是很支持es6的一些语法，这里我们就不能使用展开运算符号来进行赋值
               user:doc.user,
               type:doc.type

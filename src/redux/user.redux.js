@@ -37,7 +37,9 @@ export function user(state=initState,action){
 // function loginSuccess(data){
 //     return {type:LOGIN_SUCCESS,payload:data}
 // }
-function authSuccess(data){
+function authSuccess(obj){
+    const { pwd,...data } = obj
+    // console.log(obj);
     return {type:AUTH_SUCCESS,payload:data}
 }
 function errorMsg(msg){　// 用来报错
@@ -105,7 +107,7 @@ export function update(data){
    return dispatch=>{
        axios.post('/user/update',{data}).then(res=>{
             if(res.status===200&&res.data.code===0){
-              
+              dispatch(authSuccess(res.data.data))
             }else{
                 dispatch(errorMsg(res.data.msg))
             }

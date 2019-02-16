@@ -2,8 +2,12 @@
  * 头像选择组件
  */
 import React from 'react';
-import { Grid,List } from 'antd-mobile'
+import { Grid,List } from 'antd-mobile';
+import propTypes from 'prop-types';
 export default class AvatarSeletor extends React.Component{
+    static propTypes={
+        selectAvatar:propTypes.func.isRequired
+    }
     state={
 
     }
@@ -28,7 +32,7 @@ export default class AvatarSeletor extends React.Component{
                     columnNum={5}
                     onClick={ele=>{
                         this.setState(ele)
-                        this.props.selectAvatar(ele.text) // 组件之间传值的基本方法
+                        this.props.selectAvatar(ele.text) // 组件之间传值的基本方法,这个地方有点小bug，我们需要用属性验证来规避一下这个bug
                     }}
                     >
                     </Grid>

@@ -12,6 +12,7 @@ import Login from './container/login';
 import Register from './container/register';
 import AuthRoute from './component/authroute';
 import BossInfo from './component/bossinfo';
+import GeniusInfo from './component/gennius';
 const reduxDevtools  = window.devToolsExtension?window.devToolsExtension():f=>f;
 const store = createStore(reducers,compose(
     applyMiddleware(thunk),
@@ -19,15 +20,13 @@ const store = createStore(reducers,compose(
 ));
 // 登录页面　没有登录信息统一跳转到login
 
-function Boss(){
-   return <h2>Boss</h2>
-}
 
 ReactDom.render(
      (<Provider store={store}>
        <BrowserRouter>  
          <div>
-            <AuthRoute> </AuthRoute>
+            <AuthRoute></AuthRoute>
+            <Route path="/geniusinfo" component={GeniusInfo}/>
             <Route path="/bossinfo" component={BossInfo}></Route>
             <Route path="/login" component={Login}></Route>
             <Route path="/register" component={Register}></Route>
