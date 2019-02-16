@@ -11,7 +11,7 @@ import './index.css';
 import Login from './container/login';
 import Register from './container/register';
 import AuthRoute from './component/authroute';
-
+import BossInfo from './component/bossinfo';
 const reduxDevtools  = window.devToolsExtension?window.devToolsExtension():f=>f;
 const store = createStore(reducers,compose(
     applyMiddleware(thunk),
@@ -28,7 +28,7 @@ ReactDom.render(
        <BrowserRouter>  
          <div>
             <AuthRoute> </AuthRoute>
-            <Route path="/boss" component={Boss}></Route>
+            <Route path="/bossinfo" component={BossInfo}></Route>
             <Route path="/login" component={Login}></Route>
             <Route path="/register" component={Register}></Route>
          </div>     

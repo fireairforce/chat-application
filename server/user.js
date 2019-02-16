@@ -60,6 +60,21 @@ Router.post('/register', function(req, res){
     })
 })
 
+// 接受user信息的端口
+Router.post('/update',function(req,res){
+    const userid = req.cookies.userid; //做一次cookie的校验
+    if(!userid){
+      return json.dumps({code:1})
+    }
+    const body = res.body;
+    User.findByIdAndUpdate(userid,body,function(err,doc){
+        const data = Object.assign({},{ //因为noodejs里面不是很支持es6的一些语法，这里我们就不能使用展开运算符号来进行赋值
+              user:doc.user,
+              type:doc.type
+        },body)
+        return res.json({ code:0,data })
+      })
+})
 Router.get('/info',function(req, res){
     const {userid} = req.cookies
     // 看一下用户的请求有没有cookie，用户没有cookie表示没有登录状态
@@ -75,10 +90,12 @@ Router.get('/info',function(req, res){
         }
     })
 })
+
+
  
 //对密码进行多次加密
 function md5Pwd(pwd){
-    const salt = 'imooc_is_good_3957x8yza6!@#IUHJh~~';
+    const salt = 'chy_is_best_wdlj_3957x8yza6!@#IUHJh~~';
     return utils.md5(utils.md5(pwd+salt))// 直接使用两次md5加密和一次加盐的方法
 }
  

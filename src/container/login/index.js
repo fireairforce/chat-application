@@ -1,10 +1,10 @@
 import React from 'react';
 import Logo from '../../component/logo';
-import {List,InputItem,WingBlank,WhiteSpace,Button} from 'antd-mobile';
-import {Redirect} from 'react-router-dom';
+import { List,InputItem,WingBlank,WhiteSpace,Button } from 'antd-mobile';
+import { Redirect } from 'react-router-dom';
 // 从redux里面引入login
-import {connect} from 'react-redux';
-import {login } from './../../redux/user.redux';
+import { connect } from 'react-redux';
+import { login } from './../../redux/user.redux';
 
 class Login extends React.Component{
     state={
