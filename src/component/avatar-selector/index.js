@@ -19,21 +19,20 @@ export default class AvatarSeletor extends React.Component{
         }));
         const girdHeader = this.state.icon?(
         <div>
-            <span>已选择头像</span>
-           <img src={this.state.icon} style={{width:20}} alt="icon" />
+           <span>已选择头像:</span>
+           <img src={this.state.icon} style={{width:'20px'}} alt="icon" />
         </div>):'请选择头像';
-        // console.log(this.state);
         return(
             <div>
                 {/* 使用List组件来渲染选择的头像 */}
                 <List renderHeader={()=>girdHeader}> 
                     <Grid 
-                    data={avatarList}
-                    columnNum={5}
-                    onClick={ele=>{
-                        this.setState(ele)
-                        this.props.selectAvatar(ele.text) // 组件之间传值的基本方法,这个地方有点小bug，我们需要用属性验证来规避一下这个bug
-                    }}
+                        data={avatarList}
+                        columnNum={5}
+                        onClick={ele=>{
+                            this.setState(ele)
+                            this.props.selectAvatar(ele.text) // 组件之间传值的基本方法,这个地方有点小bug，我们需要用属性验证来规避一下这个bug
+                        }}
                     >
                     </Grid>
                 </List>
