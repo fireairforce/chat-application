@@ -8,7 +8,7 @@ function Genius(){
     return <h2>Genius首页</h2>
 }
 function Msg(){
-    return <h2>消息 列表</h2>
+    return <h2>消息列表</h2>
 }
 function User(){
     return <h2>用户中心</h2>

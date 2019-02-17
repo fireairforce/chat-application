@@ -1,28 +1,24 @@
 import React from 'react';
 import axios from 'axios';
 import { Card,WhiteSpace,WingBlank} from 'antd-mobile';
+import { connect } from 'react-redux';
+import { getUserList } from '../../redux/chatuser.redux';
 class Boss extends React.Component{
     state={
         data:[]
     }
     componentDidMount(){
-       axios.get('/user/list?type=boss').then(res=>{
-        //    console.log(res);
-           if(res.status===200){
-               this.setState({
-                   data:res.data
-               })
-           }
-       })
+      this.props.getUserList('genius');
+    //   this.setState({})
     }
     render(){
-        // console.log(this.state.data);
+        // console.log(this.props);   
         const Header = Card.Header;
         const Body = Card.Body;
         return(
             <div>
                 <WingBlank>
-                  {this.state.data.map(v=>(
+                  {this.props.chatuser.userList.map(v=>(
                       v.avatar? 
                       <Card key={v._id}>
                         <Header
@@ -42,4 +38,10 @@ class Boss extends React.Component{
         )
     }
 }
+
+function mapStateToProps(state){
+    return {chatuser:state.chatuser}
+}
+const actionCreators = { getUserList }
+Boss = connect(mapStateToProps,actionCreators)(Boss);
 export default Boss;
