@@ -39,7 +39,6 @@ export function user(state=initState,action){
 // }
 function authSuccess(obj){
     const { pwd,...data } = obj
-    // console.log(obj);
     return {type:AUTH_SUCCESS,payload:data}
 }
 function errorMsg(msg){　// 用来报错

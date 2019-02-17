@@ -28,7 +28,7 @@ class BossInfo extends React.Component{
         return(
             <div>
                  {redirect&&redirect!==path?<Redirect to={this.props.state.redirectTo} />:null}
-                <NavBar mode="dark">Boss完善信息页面</NavBar>
+                <NavBar mode="dard">Boss完善信息页面</NavBar>
                <AvatarSeletor selectAvatar={(imgname)=>{this.selectAvatar(imgname)}}></AvatarSeletor>          
                 <InputItem onChange={(v)=>{this.onChange('title',v)}}>
                   招聘职位

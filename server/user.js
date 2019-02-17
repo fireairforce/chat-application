@@ -22,8 +22,10 @@ const _filter = {'pwd':0,'__v':0}
 // 把这些字段设置成0，之后的返回数据里面就不会显示这些东西
  
 Router.get('/list',function(req, res){
+    const { type } = req.query; //这里使用的是es6里面的解构赋值，这样我们可以通过我们的接口去进行一些条件的查询，
+    //比如这里我们/list?type=boss就可以根据查询到接口之前的相对应的数据 
     // User.remove({},function(e,d){}) // 这个表示清除所有的用户信息
-    User.find({},function(err,doc){
+    User.find({ type },function(err,doc){
         return res.json(doc)
     })
 })
@@ -43,7 +45,7 @@ Router.post('/login', function(req,res){
 Router.post('/register', function(req, res){
     // console.log(res.body);
     const {user, pwd, type} = req.body
-    User.findOne({user},function(err,doc){
+    User.findOne({user},function(err,doc){0
         if (doc) {
             return res.json({code:1,msg:'用户名重复'})
         }
