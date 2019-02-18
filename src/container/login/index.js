@@ -5,42 +5,42 @@ import { Redirect } from 'react-router-dom';
 // 从redux里面引入login
 import { connect } from 'react-redux';
 import { login } from './../../redux/user.redux';
+import Form from '../../component/form';
 
 class Login extends React.Component{
-    state={
-        user:'',
-        pwd:''
-    }
-    handleChange = (type,val)=>{
-        this.setState({
-            [type]:val
-        })
-    }
+    // state={
+    //     user:'',
+    //     pwd:''
+    // }
+    // handleChange = (type,val)=>{
+    //     this.setState({
+    //         [type]:val
+    //     })
+    // }
     register = () =>{
-        // console.log(this.props);
         this.props.history.push('/register');
     }
     handleLogin = () =>{
-        this.props.login(this.state);
+        this.props.login(this.props.state); // 把高阶组件里面的state传递进去
         //把得到后的数据传递到reducer进行处理
     }
     render(){
-        // console.log(this.props);
+        console.log(this.props);
         // console.log(this.props.state);
         return(
           <div>
-               {this.props.state.redirectTo&&this.props.state.redirectTo!='/login'?<Redirect to={this.props.state.redirectTo} />:null}
+               {this.props.user.redirectTo&&this.props.user.redirectTo!='/login'?<Redirect to={this.props.user.redirectTo} />:null}
               <Logo />
-              {this.props.state.msg?<p className="error-msg">{this.props.state.msg}</p>:null}
+              {this.props.user.msg?<p className="error-msg">{this.props.user.msg}</p>:null}
               <WingBlank>
                   <List>
                       <InputItem
-                        onChange={v=>this.handleChange('user',v)}
+                        onChange={v=>this.props.handleChange('user',v)}
                       >用户名</InputItem>
                       <WhiteSpace />
                       <InputItem
                          type='password'
-                         onChange={v=>this.handleChange('pwd',v)}
+                         onChange={v=>this.props.handleChange('pwd',v)}
                       >密码</InputItem>
                   </List>
                 <Button type="primary" onClick={this.handleLogin}>登录</Button>
@@ -53,8 +53,11 @@ class Login extends React.Component{
     }
 }
 function mapStateToProps(state){
-    return {state:state.user}
+    return {user:state.user}
 }
 const actionCreators = { login }
+
+Login = Form(Login);
+
 Login = connect(mapStateToProps,actionCreators)(Login);
 export default Login; 
