@@ -7,51 +7,50 @@ import { InputItem ,List,Radio,WingBlank,WhiteSpace,Button} from 'antd-mobile';
 import { connect } from 'react-redux';
 import { register } from '../../redux/user.redux';
 import { Redirect } from 'react-router-dom';
+import Form from '../../component/form' // 高阶组件对原有组件进行了一次的功能加强
 class Register extends React.Component{
-    state={
-        user:'',
-        pwd:'',
-        repeatpwd:'',
-        type:'genius'      
-    }
-    handleChange = (key,val)=>{
-        this.setState({
-            [key]:val
-        })
-    }
+    // state={
+    //     user:'',
+    //     pwd:'',
+    //     repeatpwd:'',
+    //     type:'genius'      
+    // }
+   componentDidMount(){
+     this.props.handleChange('type','genius'); // 因为里面有个默认的type值，所以可以把它设置一波
+   }
     handleRegister = () =>{
         // console.log(this.state);
-        this.props.register(this.state);
+        this.props.register(this.props.state);
     }
     render(){
         // console.log(this.props.register);
         const RadioItem = Radio.RadioItem;
         return(
         <div>
-            {this.props.state.redirectTo?<Redirect to={this.props.state.redirectTo} />:null}
+            {this.props.user.redirectTo?<Redirect to={this.props.user.redirectTo} />:null}
             <Logo />
             <List>
-                {this.props.state.msg?<p className="error-msg">{this.props.state.msg}</p>:null}
+                {this.props.user.msg?<p className="error-msg">{this.props.user.msg}</p>:null}
               <InputItem
-                onChange={v=>{this.handleChange('user',v)}}
+                onChange={v=>{this.props.handleChange('user',v)}}
               >用户名</InputItem>
                 <WhiteSpace />
               <InputItem
               type='password'
-                 onChange={v=>{this.handleChange('pwd',v)}}
+                 onChange={v=>{this.props.handleChange('pwd',v)}}
               >密码</InputItem>
                 <WhiteSpace />
               <InputItem
                  type="password"
-                 onChange={v=>{this.handleChange('repeatpwd',v)}}
+                 onChange={v=>{this.props.handleChange('repeatpwd',v)}}
               >确认密码</InputItem>
               <WhiteSpace />
                 <RadioItem 
-                  onChange={()=>{this.handleChange('type','genius')}}
-                  checked={this.state.type=='genius'}>牛人</RadioItem>
+                  onChange={()=>{this.props.handleChange('type','genius')}}
+                  checked={this.props.state.type=='genius'}>牛人</RadioItem>
                 <RadioItem 
-                  onChange={()=>{this.handleChange('type','boss')}}
-                  checked={this.state.type=='boss'}>BOSS</RadioItem>
+                  onChange={()=>{this.props.handleChange('type','boss')}}
+                  checked={this.props.state.type=='boss'}>BOSS</RadioItem>
                 <Button type="primary" onClick={this.handleRegister}>注册</Button>
             </List>
         </div>
@@ -59,10 +58,12 @@ class Register extends React.Component{
     }
 }
 function mapStateToProps(state){
-    return {state:state.user}
+    return {user:state.user}
 }
 
 const actionCreators = { register }
+
+Register = Form(Register);//高阶组件的绑定
 
 Register = connect(mapStateToProps,actionCreators)(Register);
 

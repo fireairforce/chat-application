@@ -25,7 +25,7 @@ class Login extends React.Component{
         //把得到后的数据传递到reducer进行处理
     }
     render(){
-        console.log(this.props);
+        // console.log(this.props);
         // console.log(this.props.state);
         return(
           <div>
