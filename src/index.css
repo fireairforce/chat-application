@@ -1,12 +1,14 @@
+
 .error-msg{
     color:#f50;
     padding-left: 10px;
     padding-top: 10px;
 }
 .am-tab-bar{
+    height: auto !important;
     position: fixed;
     bottom: 0;
-    width: 100%;
+    width: 100%;  
 }
 .fixed-header .am-navbar{
     position: fixed;

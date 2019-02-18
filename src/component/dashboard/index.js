@@ -3,13 +3,11 @@ import { connect } from 'react-redux';
 import { NavBar } from 'antd-mobile';
 import NavLinkBar from './../navlink';
 import { Switch,Route } from 'react-router-dom';
-import Boss from '../../component/Boss';
+import Boss from '../../component/boss';
 import Genius from '../../component/genius';
+import User from '../../component/user/user';
 function Msg(){
     return <h2>消息列表</h2>
-}
-function User(){
-    return <h2>用户中心</h2>
 }
 class DashBoard extends React.Component{
    
