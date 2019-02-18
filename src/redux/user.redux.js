@@ -5,6 +5,7 @@ import {getRedirectPath} from '../util'
 const ERROR_MESSAGE = 'ERROR_MESSAGE' 
 const LOAD_DATA='LOAD_DATA'
 const AUTH_SUCCESS = 'AUTH_SUCCESS' // 统一为验证成功
+const LOGOUT='LOGOUT'
 const initState = {
     redirectTo:'',
     // isAuth:'false',
@@ -26,6 +27,8 @@ export function user(state=initState,action){
     //      return {...state,msg:'',redirectTo:getRedirectPath(action.payload),isAuth:true,...action.payload}
        case LOAD_DATA:
          return {...state,...action.payload} 
+       case LOGOUT:
+         return {...initState,redirectTo:'/login'}   //因为要清空数据，所以我们直接把initState展开就行了
         default:
          return state  
    }
@@ -112,4 +115,8 @@ export function update(data){
             }
        })
    }
+}
+//退出登录
+export function logoutSubmit(){
+    return {type:LOGOUT } 
 }
