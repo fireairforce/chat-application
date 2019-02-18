@@ -4,9 +4,7 @@ import { NavBar } from 'antd-mobile';
 import NavLinkBar from './../navlink';
 import { Switch,Route } from 'react-router-dom';
 import Boss from '../../component/Boss';
-function Genius(){
-    return <h2>Genius首页</h2>
-}
+import Genius from '../../component/genius';
 function Msg(){
     return <h2>消息列表</h2>
 }
@@ -34,7 +32,7 @@ class DashBoard extends React.Component{
                 path:'/genius',
                 text:'boss',
                 icon:'job',
-                title:'Boss列表',
+                title:'BOSS列表',
                 component:Genius,
                 hide:user.type=='boss'
 
@@ -51,19 +49,16 @@ class DashBoard extends React.Component{
                 title:'个人中心',
                 component:User,
             }
-         ]
-
+        ]
         return(
             <div>
               <NavBar className='fixed-header' mode="dard">{navList.find(v=>v.path==pathname).title}</NavBar>
-                  <div style={{marginTop:'45px'}}>
+                  <div style={{marginTop:'15px'}}>
                     <Switch>
                       { 
-                         
                          navList.map(v=>(
                              <Route key={v.path} path={v.path} component={v.component}></Route>
                          ))
-                        
                       }    
                     </Switch>            
                   </div>
