@@ -1,5 +1,5 @@
 import React from 'react';
-import { List,InputItem, NavBar} from 'antd-mobile';
+import { List,InputItem, NavBar,Icon} from 'antd-mobile';
 // import io from 'socket.io-client';
 import { connect } from 'react-redux';
 import { getMsgList,sendMsg ,recvMsg} from '../../redux/chat.redux';
@@ -11,8 +11,10 @@ class Chat extends React.Component{
         msg:[]
     }
     componentDidMount(){
-        // this.props.getMsgList();
-        // this.props.recvMsg();
+        if(!this.props.state.chat.chatmsg.length){
+            this.props.getMsgList();
+            this.props.recvMsg();
+        }   
     }    
     handleSubmit = () =>{
         // socket.emit('sendmsg',{text:this.state.text}); // 利用socket给后端发送数据
@@ -25,19 +27,31 @@ class Chat extends React.Component{
         this.setState({ text:'' })
     }
     render(){
-        const user = this.props.match.params.user;
+        const userid = this.props.match.params.user;
         const Item = List.Item;
-        return(
+        const users = this.props.state.chat.users;
+        // console.log(users);
+        console.log(this.props);
+        if(!users[userid]){
+            return null
+        }return(
             <div id="chat-page">
-                <NavBar>
-                    {user}
+                <NavBar
+                  mode="dark"
+                  icon = {<Icon type='left' />}
+                  onLeftClick={()=>{
+                      this.props.history.goBack();
+                  }}
+                >
+                    { users[userid].name }
                 </NavBar>
 
                 {this.props.state.chat.chatmsg.map(v=>{
-                    return v.from == user?(
+                    const avatar = require(`../img/${users[v.from].avatar}.png`)
+                    return v.from == userid?(
                         <List key={v._id}>
                           <Item
-                        //    thumb={}
+                           thumb={avatar}
                           >
                             对面说:{v.content}
                           </Item>
@@ -46,7 +60,7 @@ class Chat extends React.Component{
                         <List key={v._id}>
                         <Item 
                           className='chat-me'
-                          extra={'avatar'}
+                          extra={<img src={avatar}/>}
                         >
                          
                           我说:{v.content}

@@ -11,10 +11,6 @@ function Msg(){
     return <h2>消息列表</h2>
 }
 class DashBoard extends React.Component{
-    componentDidMount(){
-        this.props.getMsgList();
-        this.props.recvMsg();
-    }
     render(){
         // console.log(this.props);
         const pathname  = this.props.location.pathname;

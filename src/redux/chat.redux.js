@@ -11,6 +11,7 @@ const MSG_READ = 'MSG_READ';
 const initState = {
     chatmsg:[],//具体的每条聊天信息
     unread:0, //聊天框的下面显示未读信息列表
+    users:{},
 }
 
 // 过滤掉unread:action.payload.filter(v=>!v.read).length
@@ -18,7 +19,7 @@ const initState = {
 export function chat(state=initState,action){
     switch(action.type){
         case MSG_LIST:
-          return { ...state,chatmsg:action.payload,unread:action.payload.filter(v=>!v.read).length }
+          return { ...state,users:action.payload.users,chatmsg:action.payload.msg,unread:action.payload.msg.filter(v=>!v.read).length }
         case MSG_RECV:
           return { ...state,chatmsg:[...state.chatmsg,action.payload],unread:state.unread + 1}   
         // case MSG_READ:
@@ -27,8 +28,8 @@ export function chat(state=initState,action){
     }
 }
 
-function msgList(msg){
-    return { type:MSG_LIST,payload:msg }
+function msgList(msg,users){
+    return { type:MSG_LIST,payload:{ msg,users } }
 }
 
 function msgRecv(msg){
@@ -40,7 +41,7 @@ export function getMsgList(){
         axios.get('/user/getmsglist').then(res=>{
             // console.log(res);
             if(res.status ===200 && res.data.code ===0){
-              dispatch(msgList(res.data.msg))
+              dispatch(msgList(res.data.msg,res.data.users))
             }
 
         })

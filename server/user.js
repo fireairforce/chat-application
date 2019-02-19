@@ -97,17 +97,24 @@ Router.get('/info',function(req, res){
 })
 
 Router.get('/getmsglist',function(req,res){
-    const user = req.cookies.user;
+    const user = req.cookies.userid;
     // Chat.find({'$or':[{ from:user,to:user }]}) // '$or'可以在里面查询两个信息
     // 我们这里直接去查询所有的信息
     // Chat.remove({},function(e,d){})  // 删库到跑路
-    Chat.find({},function(err,doc){
+    User.find({},function(err,userdoc){
+       let users = {}
+       userdoc.forEach(v=>{
+           users[v._id] = {name:v.user,avatar:v.avatar}
+       })
+        // 为了在前端够显示出用户信息(姓名和头像之类)，我们先查询一下
+       Chat.find({'$or':[{ from:user },{ to:user }]},function(err,doc){
         if(err){
             return res.json({code:1,msg:'后端出错了'})
         }
         if(doc){ // 找到了直接把找到的信息进行返回
-            return res.json({code:0,msg:doc}) 
+            return res.json({code:0,msg:doc,users:users}) 
         }
+    })
     })
 })
 
