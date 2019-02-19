@@ -27,8 +27,8 @@ const models = {  //生成一个用户的模型
         'from':{ type:String,require:true },
         'to':{ type:String, require:true },
         
-        'read':{type:Boolean,require:false},
-        'connect':{type:String,require:true,default:''}, //设置一个默认信息
+        'read':{type:Boolean,default:false},
+        'content':{type:String,require:true,default:''}, //设置一个默认信息
         'create_time':{type:Number,default:new Date().getTime()}  
     }
 }

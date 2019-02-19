@@ -13,7 +13,7 @@ class UserCard extends React.Component{
         userlist:Proptypes.array.isRequired,// 这个数组是一个必须传递的项目
     } 
     handleClick = (v) =>{
-      this.props.history.push(`/chat/${v.user}`)
+      this.props.history.push(`/chat/${v._id}`) // 这里是每个用户唯一的id，可以用来做聊天窗口的跳转路由,在mongodb里面的唯一标识
     }
     render(){
         const Header = Card.Header;
@@ -44,4 +44,5 @@ class UserCard extends React.Component{
         )
     }
 }
+
 export default withRouter(UserCard);

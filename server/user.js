@@ -100,6 +100,7 @@ Router.get('/getmsglist',function(req,res){
     const user = req.cookies.user;
     // Chat.find({'$or':[{ from:user,to:user }]}) // '$or'可以在里面查询两个信息
     // 我们这里直接去查询所有的信息
+    // Chat.remove({},function(e,d){})  // 删库到跑路
     Chat.find({},function(err,doc){
         if(err){
             return res.json({code:1,msg:'后端出错了'})

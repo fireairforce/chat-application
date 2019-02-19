@@ -1,9 +1,9 @@
 import React from 'react';
-import { List,InputItem } from 'antd-mobile';
-import io from 'socket.io-client';
+import { List,InputItem, NavBar} from 'antd-mobile';
+// import io from 'socket.io-client';
 import { connect } from 'react-redux';
-import { getMsgList } from '../../redux/chat.redux';
-const socket = io('ws://localhost:9093') // 由于现在是跨域的,所以这里手动连接一下，否则就直接io()
+import { getMsgList,sendMsg ,recvMsg} from '../../redux/chat.redux';
+// const socket = io('ws://localhost:9093') // 由于现在是跨域的,所以这里手动连接一下，否则就直接io()
 
 class Chat extends React.Component{
     state={
@@ -12,26 +12,49 @@ class Chat extends React.Component{
     }
     componentDidMount(){
         this.props.getMsgList();
-        // socket.on('recvmsg',(data)=>{ 
-        //     //这里原本是function(data){} 但在里面我们找不到msg里面的数据，因此我们使用箭头函数
-        //     // console.log(data);
-        //     this.setState({
-        //         msg:[...this.state.msg,data.text] 
-        //         //msg的数据为之前的msg的数据加上现在的聊天输入的数据
-        //     })
-        // })
+        this.props.recvMsg();
     }    
     handleSubmit = () =>{
-        socket.emit('sendmsg',{text:this.state.text}); // 利用socket给后端发送数据
+        // socket.emit('sendmsg',{text:this.state.text}); // 利用socket给后端发送数据
+        // this.setState({ text:'' })
+        const from = this.props.state.user._id; //当前的登录人的id
+        const to = this.props.match.params.user;
+        const msg = this.state.text;
+        this.props.sendMsg({from,to,msg});
+        //发送完成之后，我们直接把state设置为空
         this.setState({ text:'' })
-    //   console.log(this.state);
     }
     render(){
-     console.log(this.props);
+        const user = this.props.match.params.user;
+        const Item = List.Item;
         return(
-            <div>
-                {this.state.msg.map(v=>{
-                    return <p key={v}>{v}</p>
+            <div id="chat-page">
+                <NavBar>
+                    {user}
+                </NavBar>
+
+
+                {this.props.state.chat.chatmsg.map(v=>{
+                    return v.from == user?(
+                        <List key={v._id}>
+                          <Item
+                        //    thumb={}
+                          >
+                            对面说:{v.content}
+                          </Item>
+                        </List>
+                    ):(
+                        <List key={v._id}>
+                        <Item 
+                          className='chat-me'
+                          extra={'avatar'}
+                        >
+                         
+                          我说:{v.content}
+                        </Item>
+                      </List>
+                    )
+                    
                 })}
                 <div className="stick-footer">
                 <List>
@@ -52,8 +75,9 @@ class Chat extends React.Component{
     }
 }
 function mapStateToProps(state){
-    return { user:state } 
+    return { state } 
 }
-const actionCreators = { getMsgList }
+const actionCreators = { getMsgList ,sendMsg,recvMsg }
+
 Chat = connect(mapStateToProps,actionCreators)(Chat)
 export default Chat;
