@@ -7,7 +7,7 @@ export default function Form(Comp){
     return class WrapperComp extends React.Component{
         state={}
         handleChange=(key,val)=>{
-            console.log(key,val);
+            // console.log(key,val);
            this.setState({
                [key]:val
            })

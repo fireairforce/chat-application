@@ -18,6 +18,7 @@ const utils = require('utility');//md5支持库
 const Router = express.Router()
 const model = require('./model')
 const User = model.getModel('user')
+const Chat = model.getModel('chat');
 const _filter = {'pwd':0,'__v':0} 
 // 把这些字段设置成0，之后的返回数据里面就不会显示这些东西
  
@@ -95,6 +96,19 @@ Router.get('/info',function(req, res){
     })
 })
 
+Router.get('/getmsglist',function(req,res){
+    const user = req.cookies.user;
+    // Chat.find({'$or':[{ from:user,to:user }]}) // '$or'可以在里面查询两个信息
+    // 我们这里直接去查询所有的信息
+    Chat.find({},function(err,doc){
+        if(err){
+            return res.json({code:1,msg:'后端出错了'})
+        }
+        if(doc){ // 找到了直接把找到的信息进行返回
+            return res.json({code:0,msg:doc}) 
+        }
+    })
+})
 
  
 //对密码进行多次加密

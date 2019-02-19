@@ -21,7 +21,15 @@ const models = {  //生成一个用户的模型
         'company':{'type':String},
         'money':{'type':String}
     },
-    chat:{
+    chat:{ // 聊天信息里面的一些数据的字段设定
+        'chatid':{ type:String,require:true}, // 两个人的id(每一个聊天的唯一标识)
+        
+        'from':{ type:String,require:true },
+        'to':{ type:String, require:true },
+        
+        'read':{type:Boolean,require:false},
+        'connect':{type:String,require:true,default:''}, //设置一个默认信息
+        'create_time':{type:Number,default:new Date().getTime()}  
     }
 }
 

@@ -1,6 +1,8 @@
 import React from 'react';
 import { List,InputItem } from 'antd-mobile';
 import io from 'socket.io-client';
+import { connect } from 'react-redux';
+import { getMsgList } from '../../redux/chat.redux';
 const socket = io('ws://localhost:9093') // 由于现在是跨域的,所以这里手动连接一下，否则就直接io()
 
 class Chat extends React.Component{
@@ -9,14 +11,15 @@ class Chat extends React.Component{
         msg:[]
     }
     componentDidMount(){
-        socket.on('recvmsg',(data)=>{ 
-            //这里原本是function(data){} 但在里面我们找不到msg里面的数据，因此我们使用箭头函数
-            // console.log(data);
-            this.setState({
-                msg:[...this.state.msg,data.text] 
-                //msg的数据为之前的msg的数据加上现在的聊天输入的数据
-            })
-        })
+        this.props.getMsgList();
+        // socket.on('recvmsg',(data)=>{ 
+        //     //这里原本是function(data){} 但在里面我们找不到msg里面的数据，因此我们使用箭头函数
+        //     // console.log(data);
+        //     this.setState({
+        //         msg:[...this.state.msg,data.text] 
+        //         //msg的数据为之前的msg的数据加上现在的聊天输入的数据
+        //     })
+        // })
     }    
     handleSubmit = () =>{
         socket.emit('sendmsg',{text:this.state.text}); // 利用socket给后端发送数据
@@ -24,7 +27,7 @@ class Chat extends React.Component{
     //   console.log(this.state);
     }
     render(){
-    //  console.log(this.props);
+     console.log(this.props);
         return(
             <div>
                 {this.state.msg.map(v=>{
@@ -48,5 +51,9 @@ class Chat extends React.Component{
         )
     }
 }
-
+function mapStateToProps(state){
+    return { user:state } 
+}
+const actionCreators = { getMsgList }
+Chat = connect(mapStateToProps,actionCreators)(Chat)
 export default Chat;
