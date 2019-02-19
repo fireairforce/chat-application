@@ -31,4 +31,7 @@
 }
 .stick-footer{
     z-index: 10; /*聊天的输入框在页面的最顶层*/
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
