@@ -6,11 +6,15 @@ import { Switch,Route } from 'react-router-dom';
 import Boss from '../../component/boss';
 import Genius from '../../component/genius';
 import User from '../../component/user/user';
+import { getMsgList,recvMsg } from '../../redux/chat.redux';
 function Msg(){
     return <h2>消息列表</h2>
 }
 class DashBoard extends React.Component{
-   
+    componentDidMount(){
+        this.props.getMsgList();
+        this.props.recvMsg();
+    }
     render(){
         // console.log(this.props);
         const pathname  = this.props.location.pathname;
@@ -60,7 +64,10 @@ class DashBoard extends React.Component{
                       }    
                     </Switch>            
                   </div>
-                <NavLinkBar data={navList}></NavLinkBar>
+                <NavLinkBar 
+                   data={navList}
+                   
+                ></NavLinkBar>
             </div>
         )
     }
@@ -68,6 +75,6 @@ class DashBoard extends React.Component{
 function mapStateToProps(state){
     return { user: state.user }
 }
-// const actionCreators = {}
-DashBoard = connect(mapStateToProps,null)(DashBoard);
+const actionCreators = { getMsgList,recvMsg }
+DashBoard = connect(mapStateToProps,actionCreators)(DashBoard);
 export default DashBoard;

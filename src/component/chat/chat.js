@@ -11,8 +11,8 @@ class Chat extends React.Component{
         msg:[]
     }
     componentDidMount(){
-        this.props.getMsgList();
-        this.props.recvMsg();
+        // this.props.getMsgList();
+        // this.props.recvMsg();
     }    
     handleSubmit = () =>{
         // socket.emit('sendmsg',{text:this.state.text}); // 利用socket给后端发送数据
@@ -32,7 +32,6 @@ class Chat extends React.Component{
                 <NavBar>
                     {user}
                 </NavBar>
-
 
                 {this.props.state.chat.chatmsg.map(v=>{
                     return v.from == user?(
