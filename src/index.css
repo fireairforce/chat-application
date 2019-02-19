@@ -18,3 +18,17 @@
 .page-content{
     padding: 45px 45px;
 }
+
+/*
+聊天页面的css
+*/
+#chat-page .chat-me .am-list-extra{
+    flex-basis: auto; 
+}
+#chat-page .chat-me .am-list-content{
+    padding-right: 15px;
+    text-align: right;
+}
+.stick-footer{
+    z-index: 10; /*聊天的输入框在页面的最顶层*/
+}

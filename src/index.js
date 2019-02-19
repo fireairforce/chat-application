@@ -14,6 +14,7 @@ import AuthRoute from './component/authroute';
 import BossInfo from './component/bossinfo';
 import GeniusInfo from './component/geniusinfo';
 import Dashboard from './component/dashboard';
+import Chat from './component/chat/chat'
 const reduxDevtools  = window.devToolsExtension?window.devToolsExtension():f=>f;
 const store = createStore(reducers,compose(
     applyMiddleware(thunk),
@@ -32,9 +33,10 @@ ReactDom.render(
             {/*使用Switch包起来的路由下面它就只会显示一种路由不会显示其他的，否则就会显示一些其他的路由
             　　，例如下面的那个没有path的组件,有Switch的话，最后一个页面没有找到就会404 */}
             <Route path="/geniusinfo" component={GeniusInfo}/>
-            <Route path="/bossinfo" component={BossInfo}></Route>
-            <Route path="/login" component={Login}></Route>
-            <Route path="/register" component={Register}></Route>
+            <Route path="/bossinfo" component={BossInfo} />
+            <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
+            <Route path="/chat/:user" component={Chat}/>
             <Route component={Dashboard} />
           </Switch>
          </div>     

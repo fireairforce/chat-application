@@ -4,19 +4,28 @@
 import React from 'react';
 import { Card,WingBlank } from 'antd-mobile';
 import Proptypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
+/*
+ * 这个组件并不是Route组件里面的，所以不具有this.props的一些事件，我们用withRouter来解决这个问题
+ */
 class UserCard extends React.Component{
     static propTypes = {
         userlist:Proptypes.array.isRequired,// 这个数组是一个必须传递的项目
     } 
+    handleClick = (v) =>{
+      this.props.history.push(`/chat/${v.user}`)
+    }
     render(){
         const Header = Card.Header;
         const Body = Card.Body;
-        // console.log(this.props.userlist);
+        console.log(this.props);
         return(
                  <WingBlank>
                   {this.props.userlist.map(v=>(
                       v.avatar? 
-                      <Card key={v._id}>
+                      <Card 
+                      key={v._id} 
+                      onClick={()=>{this.handleClick(v)}}>
                         <Header
                           title={v.user}
                           thumb={require(`./../img/${v.avatar}.png`)}
@@ -35,4 +44,4 @@ class UserCard extends React.Component{
         )
     }
 }
-export default UserCard;
+export default withRouter(UserCard);
