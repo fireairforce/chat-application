@@ -23,8 +23,8 @@ export function chat(state=initState,action){
           return { ...state,users:action.payload.users,chatmsg:action.payload.msg,unread:action.payload.msg.filter(v=>!v.read&&v.to==action.payload.userid).length } 
           //把read是false和发送人发送过来的信息过滤出来
         case MSG_RECV:
-          const n = action.payload.to===action.payload.userid?1:0;
-        //   console.log(action.payload);
+          const n = action.payload.to!==action.payload.userid?1:0;
+        //   console.log(action.payload); 
           return { ...state,chatmsg:[...state.chatmsg,action.payload.msg],unread:state.unread + n}   
         // case MSG_READ:
         default:
