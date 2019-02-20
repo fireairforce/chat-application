@@ -22,6 +22,8 @@ const Chat = model.getModel('chat');
 const _filter = {'pwd':0,'__v':0} 
 // 把这些字段设置成0，之后的返回数据里面就不会显示这些东西
  
+
+//   Chat.remove({},function(e,d){})  // 删库到跑路
 Router.get('/list',function(req, res){
     const { type } = req.query; //这里使用的是es6里面的解构赋值，这样我们可以通过我们的接口去进行一些条件的查询，
     //比如这里我们/list?type=boss就可以根据查询到接口之前的相对应的数据 
@@ -100,7 +102,7 @@ Router.get('/getmsglist',function(req,res){
     const user = req.cookies.userid;
     // Chat.find({'$or':[{ from:user,to:user }]}) // '$or'可以在里面查询两个信息
     // 我们这里直接去查询所有的信息
-    // Chat.remove({},function(e,d){})  // 删库到跑路
+  
     User.find({},function(err,userdoc){
        let users = {}
        userdoc.forEach(v=>{

@@ -3,6 +3,7 @@ import { List,InputItem, NavBar,Icon} from 'antd-mobile';
 // import io from 'socket.io-client';
 import { connect } from 'react-redux';
 import { getMsgList,sendMsg ,recvMsg} from '../../redux/chat.redux';
+import { getChatId } from '../../util';
 // const socket = io('ws://localhost:9093') // 由于现在是跨域的,所以这里手动连接一下，否则就直接io()
 
 class Chat extends React.Component{
@@ -34,7 +35,11 @@ class Chat extends React.Component{
         console.log(this.props);
         if(!users[userid]){
             return null
-        }return(
+        }
+        const chatid = getChatId(userid,this.props.state.user._id);
+        const chatmsgs = this.props.state.chat.chatmsg.filter(v=>v.chatid===chatid); //进行一些数据的过滤
+
+        return(
             <div id="chat-page">
                 <NavBar
                   mode="dark"
@@ -46,14 +51,14 @@ class Chat extends React.Component{
                     { users[userid].name }
                 </NavBar>
 
-                {this.props.state.chat.chatmsg.map(v=>{
+                {chatmsgs.map(v=>{
                     const avatar = require(`../img/${users[v.from].avatar}.png`)
                     return v.from == userid?(
                         <List key={v._id}>
                           <Item
                            thumb={avatar}
                           >
-                            对面说:{v.content}
+                            {v.content}
                           </Item>
                         </List>
                     ):(
@@ -62,8 +67,7 @@ class Chat extends React.Component{
                           className='chat-me'
                           extra={<img src={avatar}/>}
                         >
-                         
-                          我说:{v.content}
+                           {v.content}
                         </Item>
                       </List>
                     )

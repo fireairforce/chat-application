@@ -10,12 +10,18 @@ import { getMsgList,recvMsg } from '../../redux/chat.redux';
 function Msg(){
     return <h2>消息列表</h2>
 }
-class DashBoard extends React.Component{
-    render(){
+class DashBoard extends React.Component{  
+    componentDidMount(){
+        if(!this.props.state.chat.chatmsg.length){
+            this.props.getMsgList();
+            this.props.recvMsg();
+        }   
+    }
+    render(){    
         // console.log(this.props);
         const pathname  = this.props.location.pathname;
         // console.log(pathname);
-        const user = this.props.user;
+        const user = this.props.state.user;
         // console.log(user);
         const navList = [
             {
@@ -69,7 +75,7 @@ class DashBoard extends React.Component{
     }
 }
 function mapStateToProps(state){
-    return { user: state.user }
+    return { state }
 }
 const actionCreators = { getMsgList,recvMsg }
 DashBoard = connect(mapStateToProps,actionCreators)(DashBoard);
