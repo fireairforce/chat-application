@@ -2,7 +2,7 @@ import React from 'react';
 import { List,InputItem, NavBar,Icon,Grid } from 'antd-mobile';
 // import io from 'socket.io-client';
 import { connect } from 'react-redux';
-import { getMsgList,sendMsg ,recvMsg} from '../../redux/chat.redux';
+import { getMsgList,sendMsg ,recvMsg ,readMsg} from '../../redux/chat.redux';
 import { getChatId } from '../../util';
 // const socket = io('ws://localhost:9093') // 由于现在是跨域的,所以这里手动连接一下，否则就直接io()
 
@@ -16,7 +16,12 @@ class Chat extends React.Component{
             this.props.getMsgList();
             this.props.recvMsg();
         }
-        
+       
+    }
+    //　这个周期函数会在我们退出当前路由的时候执行
+    componentWillUnmount(){
+        const from = this.props.match.params.user;
+        this.props.readMsg(from); //告诉后端消息已读,对方发过来的消息已读
     }    
     fixCarousel=()=>{
         // console.log('1');
@@ -35,6 +40,7 @@ class Chat extends React.Component{
         this.setState({ text:'',showEmoji:false })
     }
     render(){
+        // console.log(this.props);
         const emoji = '😀 😃 😄 😁 😆 😅 😂 😊 😇 🙂 🙃 😉 😌 😍 😘 😗 😙 😚 😋 😜 😝 😛 🤑 🤗 🤓 😎 😏 😒 😞 😔 😟 😕 🙁 😣 😖 😫 😩 😤 😠 😡 😶 😐 😑 😯 😦 😧 😮 😲 😵 😳 😱 😨 😰 😢 😥 😭 😓 😪 😴 🙄 🤔 😬 🤐 😷 🤒 🤕 😈 👿 👹 👺 💩 👻 💀 ☠️ 👽 👾 🤖 🎃 😺 😸 😹 😻 😼 😽 🙀 😿 😾 👐 🙌 👏 🙏 👍 👎 👊 ✊ 🤘 👌 👈 👉 👆 👇 ✋  🖐 🖖 👋  💪 🖕 ✍️  💅 🖖 💄 💋 👄 👅 👂 👃 👁 👀 🐎'
                                         .split(' ') //把他们通过空格分割成一个数组
                                         .filter(v=>v) // 过滤空格
@@ -131,7 +137,7 @@ class Chat extends React.Component{
 function mapStateToProps(state){
     return { state } 
 }
-const actionCreators = { getMsgList ,sendMsg,recvMsg }
+const actionCreators = { getMsgList ,sendMsg,recvMsg,readMsg }
 
 Chat = connect(mapStateToProps,actionCreators)(Chat)
 export default Chat;

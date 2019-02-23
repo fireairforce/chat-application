@@ -98,6 +98,28 @@ Router.get('/info',function(req, res){
     })
 })
 
+Router.post('/readmsg',function(req,res){
+    const userid = req.cookies.userid;
+    const { from } =req.body;
+    //  console.log(userid,from);
+    Chat.update({from,to:userid},{
+        '$set':{ read:true }},
+        {'multi':true},
+        function(err,doc){
+        /**
+         * Notice : 这个地方的update函数会导致我们真正显示的unread数量出现一些偏差,
+         * 所以我们需要加入multi:true来改变这一现状
+         */
+        // console.log(doc);
+        if(!err){
+            return res.json({code:0,number:doc.nModified})
+        }
+        return res.json({code:1,msg:'修改失败'})
+    }) 
+    // 这里不用'$set'简写也可以，这里比较严格的写法
+
+})
+
 Router.get('/getmsglist',function(req,res){
     const user = req.cookies.userid;
     // Chat.find({'$or':[{ from:user,to:user }]}) // '$or'可以在里面查询两个信息
