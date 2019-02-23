@@ -27,9 +27,12 @@ export function chat(state=initState,action){
         //   console.log(n);
           return { ...state,chatmsg:[...state.chatmsg,action.payload.msg],unread:state.unread + n }   
         case MSG_READ:
-          return { ...state,chatmsg:state.chatmsg.map(v=>({
-              ...v,read:true
-          })),unread:state.unread-action.payload.number} // unread用未读数量减去后端修改的数量
+        const { from,number } = action.payload;
+          return { ...state,
+            chatmsg:state.chatmsg.map(v=>({
+              ...v,read:from==v.from?true:v.read
+          })),
+          unread:state.unread-number} // unread用未读数量减去后端修改的数量
         default:
           return state
     }
