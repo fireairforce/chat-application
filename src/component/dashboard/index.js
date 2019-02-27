@@ -8,6 +8,7 @@ import Genius from '../../component/genius';
 import User from '../../component/user/user';
 import Msg from '../../component/msg/msg'
 import { getMsgList,recvMsg } from '../../redux/chat.redux';
+import QueueAnim from 'rc-queue-anim';
 
 class DashBoard extends React.Component{  
     componentDidMount(){
@@ -53,17 +54,26 @@ class DashBoard extends React.Component{
                 component:User,
             }
         ]
+        // 让动画生效，只渲染一个route
+        const page = navList.find(v=>v.path==pathname) // 找到路由对应我们当前路由的名字
+        // console.log(page);
         return(
             <div>
-              <NavBar className='fixed-header' mode="dard">{navList.find(v=>v.path==pathname).title}</NavBar>
+              <NavBar className='fixed-header' mode="dard">
+                {navList.find(v=>v.path==pathname).title}
+             </NavBar>
                   <div style={{marginTop:'15px'}}>
-                    <Switch>
-                      { 
-                         navList.map(v=>(
-                             <Route key={v.path} path={v.path} component={v.component}></Route>
-                         ))
-                      }    
-                    </Switch>            
+                  <QueueAnim type="scaleX" delay={500}>
+                    {/* <Switch> */}
+                    
+                      {/* { 
+                         navList.map(v=>( */}
+                             <Route key={page.path} path={page.path} component={page.component}></Route>
+                         {/* ))
+                      } */}
+                     
+                    {/* </Switch>  */}
+                    </QueueAnim>               
                   </div>
                 <NavLinkBar 
                    data={navList}

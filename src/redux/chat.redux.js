@@ -50,14 +50,12 @@ function msgRead({from,userid,number}){ // 这里传递一下发信人和收信�
 }
 
 export function getMsgList(){
-    return (dispatch,getState) =>{ // 这个地方其实有第二个参数叫做getState,返回我们应用里面的所有状态(reducers里面的)
-        axios.get('/user/getmsglist').then(res=>{
+    return async (dispatch,getState) =>{ // 这个地方其实有第二个参数叫做getState,返回我们应用里面的所有状态(reducers里面的)
+        const res = await axios.get('/user/getmsglist')
             if(res.status ===200 && res.data.code ===0){
                 const userid = getState().user._id;
                 dispatch(msgList(res.data.msg,res.data.users,userid))
             }
-
-        })
     }
 }
 

@@ -4,6 +4,7 @@ import { List,InputItem, NavBar,Icon,Grid } from 'antd-mobile';
 import { connect } from 'react-redux';
 import { getMsgList,sendMsg ,recvMsg ,readMsg} from '../../redux/chat.redux';
 import { getChatId } from '../../util';
+import QueueAnim from 'rc-queue-anim';
 // const socket = io('ws://localhost:9093') // 由于现在是跨域的,所以这里手动连接一下，否则就直接io()
 
 class Chat extends React.Component{
@@ -68,7 +69,8 @@ class Chat extends React.Component{
                 >
                     { users[userid].name }
                 </NavBar>
-
+      
+           <QueueAnim delay={100} type="scale">
                 {chatmsgs.map(v=>{
                     const avatar = require(`../img/${users[v.from].avatar}.png`)
                     return v.from == userid?(
@@ -91,6 +93,8 @@ class Chat extends React.Component{
                     )
                     
                 })}
+            </QueueAnim>
+
                 <div className="stick-footer">
                 <List>
                     <InputItem

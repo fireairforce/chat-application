@@ -48,6 +48,7 @@
     "postcss-preset-env": "6.3.1",
     "postcss-safe-parser": "4.0.1",
     "prop-types": "^15.7.2",
+    "rc-queue-anim": "^1.6.12",
     "react": "^16.7.0",
     "react-app-polyfill": "^0.2.0",
     "react-dev-utils": "^7.0.1",
@@ -76,7 +77,21 @@
     "test": "node scripts/test.js"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "rules": {
+      "eqeqeq": [
+        "off"
+      ],
+      "no-unused-vars": [
+        "off"
+      ],
+      "jsx-a11y/accessible-emoji": [
+        "off"
+      ],
+      "jsx-a11y/alt-text": [
+        0
+      ]
+    }
   },
   "browserslist": [
     ">0.2%",
