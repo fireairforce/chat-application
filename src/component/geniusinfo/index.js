@@ -48,6 +48,6 @@ class GeniusInfo extends React.Component{
 function mapStateToProps(state){
     return { state: state.user}
   }
-  const actionCreators = { update }
-  GeniusInfo = connect(mapStateToProps,actionCreators)(GeniusInfo);
+const actionCreators = { update }
+GeniusInfo = connect(mapStateToProps,actionCreators)(GeniusInfo);
 export default GeniusInfo;

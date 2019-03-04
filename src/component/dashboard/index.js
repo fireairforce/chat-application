@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { NavBar } from 'antd-mobile';
 import NavLinkBar from './../navlink';
-import { Switch,Route } from 'react-router-dom';
+import { Route ,Redirect } from 'react-router-dom';
 import Boss from '../../component/boss';
 import Genius from '../../component/genius';
 import User from '../../component/user/user';
@@ -17,6 +17,7 @@ class DashBoard extends React.Component{
             this.props.recvMsg();
         }   
     }
+  
     render(){    
         // console.log(this.props);
         const pathname  = this.props.location.pathname;
@@ -57,11 +58,12 @@ class DashBoard extends React.Component{
         // 让动画生效，只渲染一个route
         const page = navList.find(v=>v.path==pathname) // 找到路由对应我们当前路由的名字
         // console.log(page);
-        return(
+        return page?(
             <div>
               <NavBar className='fixed-header' mode="dard">
-                {navList.find(v=>v.path==pathname).title}
-             </NavBar>
+                {/* {navList.find(v=>v.path==pathname).title} */}
+                {page.title}
+              </NavBar>
                   <div style={{marginTop:'15px'}}>
                   <QueueAnim type="scaleX" delay={500}>
                     {/* <Switch> */}
@@ -80,7 +82,7 @@ class DashBoard extends React.Component{
                    
                 ></NavLinkBar>
             </div>
-        )
+        ):<Redirect to="/msg" />
     }
 }
 function mapStateToProps(state){

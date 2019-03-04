@@ -7,6 +7,7 @@
     "@svgr/webpack": "2.4.1",
     "antd-mobile": "^2.2.0-beta.1",
     "axios": "^0.18.0",
+    "babel-cli": "^6.26.0",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "9.0.0",
     "babel-jest": "23.6.0",
@@ -75,7 +76,8 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
-    "server":"nodemon server/server.js"
+    "server": "NODE_ENV=test nodemon --exec babel-node -- server/server.js",
+    "server1": "nodemon server/server.js"
   },
   "eslintConfig": {
     "extends": "react-app",

@@ -6,6 +6,8 @@ const model = require('./model');
 const Chat = model.getModel('chat');
 const path = require('path');
 const app = express()
+// const renderTostring = require('react-dom/server')
+
 // work with express
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
@@ -36,11 +38,11 @@ app.use(function(req,res,next){
    if(req.url.startsWith('/user/')||req.url.startsWith('/static/')){
        return next() 
    }
-   console.log(path.resolve('build/index.html'));
+//    console.log(path.resolve('build/index.html'));
    return res.sendFile(path.resolve('build/index.html'))
 })
-app.use('/',express.static(path.resolve('build'))) // 设置一些express的路由拦截
 
+app.use('/',express.static(path.resolve('build'))) // 设置一些express的路由拦截
 
 server.listen(9093,function(){
     console.log('server start success')
