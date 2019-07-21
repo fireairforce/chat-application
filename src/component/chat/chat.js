@@ -51,7 +51,7 @@ class Chat extends React.Component{
         const users = this.props.state.chat.users;
         const { showEmoji } = this.state;
         // console.log(users);
-        // console.log(this.props);
+        console.log(this.props);
         if(!users[userid]){
             return null
         }

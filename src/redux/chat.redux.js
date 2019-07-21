@@ -82,7 +82,7 @@ export function readMsg(from){ //
         axios.post('/user/readmsg',{from}).then(res=>{
             const userid = getState().user._id;
             const num  = res.data.number;//这个number 由后端来返回
-            
+    
             if(res.status==200&&res.data.code ==0){
                 dispatch(msgRead({ from,userid, num}))
                 // num可以写为num:res.data.num来进行传递

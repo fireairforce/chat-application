@@ -44,7 +44,7 @@ app.use(function(req,res,next){
 
 app.use('/',express.static(path.resolve('build'))) // 设置一些express的路由拦截
 
-server.listen(9093,function(){
+server.listen(9093,function(){ 
     console.log('server start success')
 })
 
@@ -52,4 +52,4 @@ server.listen(9093,function(){
  * 
  *上线步骤:
  使用pm2管理node进程(后台重启，以及实行)
- */
+ */ 

@@ -20,11 +20,11 @@ function userList(data){
 }
 
 export function getUserList(type){
-    return dispatch=>{
+    return dipatch=>{
         axios.get('/user/list?type='+type).then(res=>{
             //    console.log(res);
                if(res.status===200){
-                  dispatch(userList(res.data))
+                  dipatch(userList(res.data))
                }
            })
     }
