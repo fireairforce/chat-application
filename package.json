@@ -43,7 +43,7 @@
     "js-yaml": "^3.13.1",
     "merge": "^1.2.1",
     "mini-css-extract-plugin": "0.4.3",
-    "mongoose": "^5.4.4",
+    "mongoose": "^5.7.5",
     "optimize-css-assets-webpack-plugin": "5.0.1",
     "pnp-webpack-plugin": "1.1.0",
     "postcss-flexbugs-fixes": "4.1.0",
